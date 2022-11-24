@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 //import {data} from '../data'
 
 const AddAgenda = () => {
-  const [agendas, setAgendas] = useState([])
+  const [agendas, setAgendas] = useState(JSON.parse(window.sessionStorage.getItem('agendas')) || [])
   const [itemValues, setItemValues] = useState([{item: ""}])
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -11,6 +12,8 @@ const AddAgenda = () => {
   const [date, setDate] = useState("")
 
   const [time, setTime] = useState("")
+  
+  const navigate = useNavigate()
 
   // useEffect(() => {
   //   window.sessionStorage.setItem('agendas', JSON.stringify(agendas))
@@ -45,7 +48,9 @@ const AddAgenda = () => {
     //   status: false
     // })
     setAgendas(prev => (
-      [...prev, {title,
+      [...prev, {
+        id: new Date().getTime().toString(),
+        title,
         description,
         facilitator,
         items: itemValues,
@@ -59,6 +64,8 @@ const AddAgenda = () => {
     setFacilitator("")
     setDate("")
     setTime("")
+    setItemValues([{item: ""}])
+    
   }
   console.log(agendas)
 
