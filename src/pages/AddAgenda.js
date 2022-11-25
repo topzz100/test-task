@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 //import {data} from '../data'
 
@@ -15,7 +15,7 @@ const AddAgenda = () => {
   const [time, setTime] = useState("")
   const [error, setError] = useState(false)
   
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
 
   // useEffect(() => {
@@ -46,7 +46,7 @@ const AddAgenda = () => {
     setAgenda(singleAgenda[0])
    }
    
-  }, [])
+  }, [agendas, params.id])
   useEffect(() => {
     
     if(params.id){
@@ -57,7 +57,7 @@ const AddAgenda = () => {
       setTime(agenda?.time)
       setItemValues(agenda?.items)
     } 
-  }, [agenda])
+  }, [agenda, params.id])
   const showError= () => {
     return(
       <p style={{"color": "red"}}>Please fill input field</p>

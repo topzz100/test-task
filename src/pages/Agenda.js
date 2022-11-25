@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 import {Delete, SystemUpdateAlt} from '@mui/icons-material';
 
 const Agenda = () => {
-    const [agendas, setAgendas] = useState(JSON.parse(window.sessionStorage.getItem('agendas')) || [])
+    const [agendas] = useState(JSON.parse(window.sessionStorage.getItem('agendas')) || [])
     const [agenda, setAgenda] = useState({})
     const [status, setStatus] = useState()
     const navigate = useNavigate()
@@ -15,7 +15,7 @@ const Agenda = () => {
         const singleAgenda = agendas.filter((agenda) => agenda.id === params.id)
         setAgenda(singleAgenda[0])
         setStatus(singleAgenda[0].status)
-    }, [])
+    }, [params.id, agendas])
     // console.log(agenda)
     // useEffect(() => {
     //     setStatus(agenda.status)
