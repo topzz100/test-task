@@ -28,7 +28,8 @@ const Home = () => {
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">{a.title}</h5>
-                  <p class="card-text">{a.description.substring(0,20)}...</p>
+                  <p class="card-text">{a?.description?.substring(0,20)}...</p>
+                  <p><span>Status:</span><span>{a.status? 'Done': 'Not Done'}</span></p>
                   <Link to={`/${a.id}`}>
                     <h6 className='d-flex justify-content-between'><span>See more</span> <ChevronRight /></h6>
                   </Link>

@@ -12,6 +12,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/add-agenda" element={<AddAgenda/>}/>
         <Route path="/:id" element={<Agenda/>}/>
+        <Route path="/update/:id" element={<AddAgenda/>}/>
       </Routes>
     </div>
   );

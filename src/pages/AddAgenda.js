@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 //import {data} from '../data'
 
@@ -11,14 +11,19 @@ const AddAgenda = () => {
   const [facilitator, setFacilitator] = useState("")
   const [date, setDate] = useState("")
 
+  const [agenda, setAgenda] = useState({})
   const [time, setTime] = useState("")
+  const [error, setError] = useState(false)
   
   const navigate = useNavigate()
+
 
   // useEffect(() => {
   //   window.sessionStorage.setItem('agendas', JSON.stringify(agendas))
   // }, [])
   
+  const params = useParams()
+  console.log("PARAMS", params)
 
   const handleChange = (i, e)=> {
     let newItemValues = [...itemValues]
@@ -35,29 +40,53 @@ const AddAgenda = () => {
   console.log(itemValues)
   window.sessionStorage.setItem('agendas', JSON.stringify(agendas));
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+   if(params.id){
+    const singleAgenda = agendas.filter((agenda) => agenda.id === params.id)
+    setAgenda(singleAgenda[0])
+   }
+   
+  }, [])
+  useEffect(() => {
+    
+    if(params.id){
+      setDescription(agenda?.description)
+      setTitle(agenda?.title)
+      setFacilitator(agenda?.facilitator)
+      setDate(agenda?.date)
+      setTime(agenda?.time)
+      setItemValues(agenda?.items)
+    } 
+  }, [agenda])
+  const showError= () => {
+    return(
+      <p style={{"color": "red"}}>Please fill input field</p>
+    )
+  }
+
+  const handleUpdate=(e) => {
     e.preventDefault()
-    // let data = []
-    // data.push({
-    //   title,
-    //   description,
-    //   facilitator,
-    //   items: itemValues,
-    //   date,
-    //   time,
-    //   status: false
-    // })
-    setAgendas(prev => (
-      [...prev, {
-        id: new Date().getTime().toString(),
-        title,
-        description,
-        facilitator,
-        items: itemValues,
-        date,
-        time,
-        status: false}]
-    ))
+    const newAgendas = agendas.filter(agenda => agenda.id !== params.id)
+    // setAgendas(prev => (
+    //   [...prev, {
+    //     id: new Date().getTime().toString(),
+    //     title,
+    //     description,
+    //     facilitator,
+    //     items: itemValues,
+    //     date,
+    //     time,
+    //     status: false}]
+    // ))
+    setAgendas([...newAgendas,{
+         id: agenda.id,
+           title,
+           description,
+           facilitator,
+          items: itemValues,
+         date,
+         time,
+          status: false} ])
     window.sessionStorage.setItem('agendas', JSON.stringify(agendas));
     setDescription("")
     setTitle("")
@@ -65,6 +94,35 @@ const AddAgenda = () => {
     setDate("")
     setTime("")
     setItemValues([{item: ""}])
+    window.location.replace('/')
+  }
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(title === ""  || description === ""  || facilitator=== ""  || date === ""  || time === "" || itemValues[0].item===""){
+      setError(true)
+    }else{
+      setAgendas(prev => (
+        [...prev, {
+          id: new Date().getTime().toString(),
+          title,
+          description,
+          facilitator,
+          items: itemValues,
+          date,
+          time,
+          status: false}]
+      ))
+      window.sessionStorage.setItem('agendas', JSON.stringify(agendas));
+      setDescription("")
+      setTitle("")
+      setFacilitator("")
+      setDate("")
+      setTime("")
+      setItemValues([{item: ""}])
+          setError(false)
+    }
     
   }
   console.log(agendas)
@@ -73,7 +131,10 @@ const AddAgenda = () => {
     <div >
       <Navbar/>
       <div className='p-5 d-flex justify-content-center'>
-        <div className='row w-500'>
+        {
+          params.id?
+          (
+            <div className='row w-500'>
           <form>
 
           <div className="mb-3">
@@ -90,10 +151,11 @@ const AddAgenda = () => {
           </div>
           <div>
             {
-              itemValues.map((item, i) => (
+              itemValues?.map((item, i) => (
                 <div className="mb-3" key={i}>
                   <label >Agenda Items</label>
                   <input className="form-control" id="exampleFormControlInput1" value={item.item || ""} onChange={e => handleChange(i, e)}/>
+                  
               </div>
 
               ))
@@ -101,11 +163,6 @@ const AddAgenda = () => {
             }
             <button onClick={(e) => addFormFields(e)}>Add items</button>
           </div>
-          {/* <div className="mb-3" >
-                  <label for="exampleFormControlTextarea1" className="form-label">Agenda Items</label>
-                  <input type="email" className="form-control" id="exampleFormControlInput1"/>
-                <button onClick={() => addFormFields}>Add items</button>
-              </div> */}
           
           <div className="mb-3">
             <label className="form-label">Date</label>
@@ -115,12 +172,62 @@ const AddAgenda = () => {
             <label className="form-label">Time</label>
             <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={time} onChange={e => setTime(e.target.value)}/>
           </div>
+          <button className='d-flex justify-content-center' type='submit' onClick={handleUpdate}>
+            Submit
+          </button>
+          </form>
+        </div>
+          ):
+        (<div className='row w-500'>
+          <form>
+
+          <div className="mb-3">
+            <label className="form-label">Title</label>
+            <input  className="form-control" id="exampleFormControlInput1" placeholder="" value={title} onChange={e => setTitle(e.target.value)}/>
+            {error && title ==="" && showError()}
+          </div>
+          <div className="mb-3">
+            <label  className="form-label">Facilitator</label>
+            <input className="form-control" id="exampleFormControlInput1"  value={facilitator} onChange={e => setFacilitator(e.target.value)}/>
+            {error && facilitator ==="" && showError()}
+          </div>
+          <div className="mb-3">
+            <label  className="form-label">Description</label>
+            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+            {error && description ==="" && showError()}
+          </div>
+          <div>
+            {
+              itemValues.map((item, i) => (
+                <div className="mb-3" key={i}>
+                  <label >Agenda Items</label>
+                  <input className="form-control" id="exampleFormControlInput1" value={item.item || ""} onChange={e => handleChange(i, e)}/>
+                  {error && item?.item ==="" && showError()}
+              </div>
+
+              ))
+              
+            }
+            <button onClick={(e) => addFormFields(e)}>Add items</button>
+          </div>
+          
+          <div className="mb-3">
+            <label className="form-label">Date</label>
+            <input className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={date} onChange={e => setDate(e.target.value)}/>
+            {error && date ==="" && showError()}
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Time</label>
+            <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={time} onChange={e => setTime(e.target.value)}/>
+            {error && time ==="" && showError()}
+          </div>
           <button className='d-flex justify-content-center' type='submit' onClick={handleSubmit}>
             Submit
           </button>
           </form>
         </div>
-        
+        )
+      }
       </div>
     </div>
   )
