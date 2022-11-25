@@ -12,11 +12,11 @@ const Home = () => {
   return (
     <div>
       <Navbar/>
-      <h3>
-        agendas
+      <h3 className="text-center mt-2">
+        Agendas
       </h3>
       <Link to={"/add-agenda"}>
-        <div className='d-flex add-box'>
+        <div className='d-flex add-box mx-3'>
             <Add/>
             <span>Add agenda</span>
         </div>
