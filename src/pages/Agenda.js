@@ -29,31 +29,29 @@ const Agenda = () => {
         navigate('/')
     }
     console.log(status)
+
+    //handle update
     const handleUpdate = () => {
         setStatus(!status)
         const updatedAgenda = agendas.filter(agenda => agenda.id === params.id)
         updatedAgenda[0].status = status
         const filteredAgendas = agendas.filter(agenda => agenda.id !== params.id)
 
-       const newAgenda = {
-            id: agenda.id,
-            title: agenda.title,
-            description: agenda.description,
-            facilitator : agenda.facilitator,
-            items: agenda.items,
-            date: agenda.date,
-            time: agenda.time,
-            status: status
-        }
-         //setAgendas([...filteredAgendas, {...agenda, status}])
+    //    const newAgenda = {
+    //         id: agenda.id,
+    //         title: agenda.title,
+    //         description: agenda.description,
+    //         facilitator : agenda.facilitator,
+    //         items: agenda.items,
+    //         date: agenda.date,
+    //         time: agenda.time,
+    //         status: status
+    //     }
        const newAgendas = [...filteredAgendas, updatedAgenda[0]]
         window.sessionStorage.setItem('agendas', JSON.stringify(newAgendas));
-        //window.location.replace('/')
+        
     }
-    // useEffect(()=> {
-    //     handleUpdate()
-    //     setStatus(!status)
-    // }, [status])
+   
 
   return (
     <div>
@@ -90,7 +88,7 @@ const Agenda = () => {
                         </div>
                         <div ><span classsName='h6'>Status:</span> &nbsp;
                             <span>
-                                <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value={agenda.status}  checked={agenda.status}
+                                <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value={status}  checked={agenda.status}
                                 onClick={()=>{
                                     // setStatus(!status)
                                     handleUpdate()

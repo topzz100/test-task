@@ -163,12 +163,12 @@ const AddAgenda = () => {
           
           <div className="mb-3">
             <label className="form-label">Date</label>
-            <input className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={date} onChange={e => setDate(e.target.value)}/>
+            <input className="form-control" id="exampleFormControlInput1" value={date} onChange={e => setDate(e.target.value)}/>
             {error && date ==="" && showError()}
           </div>
           <div className="mb-3">
             <label className="form-label">Time</label>
-            <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={time} onChange={e => setTime(e.target.value)}/>
+            <input  className="form-control" id="exampleFormControlInput1"  value={time} onChange={e => setTime(e.target.value)}/>
             {error && time ==="" && showError()}
           </div>
           <button className='d-flex justify-content-center button' type='submit' onClick={handleUpdate}>
@@ -213,12 +213,12 @@ const AddAgenda = () => {
           
           <div className="mb-3">
             <label className="form-label">Date</label>
-            <input className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={date} onChange={e => setDate(e.target.value)}/>
+            <input className="form-control" id="exampleFormControlInput1"  value={date} onChange={e => setDate(e.target.value)}/>
             {error && date ==="" && showError()}
           </div>
           <div className="mb-3">
             <label className="form-label">Time</label>
-            <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={time} onChange={e => setTime(e.target.value)}/>
+            <input  className="form-control" id="exampleFormControlInput1"  value={time} onChange={e => setTime(e.target.value)}/>
             {error && time ==="" && showError()}
           </div>
           <button className='d-flex justify-content-center button' type='submit' onClick={handleSubmit}>
