@@ -66,18 +66,11 @@ const AddAgenda = () => {
 
   const handleUpdate=(e) => {
     e.preventDefault()
+    if(title === ""  || description === ""  || facilitator=== ""  || date === ""  || time === "" || itemValues[0].item===""){
+      setError(true)
+    }else{
     const newAgendas = agendas.filter(agenda => agenda.id !== params.id)
-    // setAgendas(prev => (
-    //   [...prev, {
-    //     id: new Date().getTime().toString(),
-    //     title,
-    //     description,
-    //     facilitator,
-    //     items: itemValues,
-    //     date,
-    //     time,
-    //     status: false}]
-    // ))
+ 
     setAgendas([...newAgendas,{
          id: agenda.id,
            title,
@@ -95,6 +88,7 @@ const AddAgenda = () => {
     setTime("")
     setItemValues([{item: ""}])
     window.location.replace('/')
+    }
   }
   
 
@@ -134,20 +128,23 @@ const AddAgenda = () => {
         {
           params.id?
           (
-            <div className='row w-500'>
+            <div className='row w-500 bg-green p-2'>
           <form>
 
           <div className="mb-3">
             <label className="form-label">Title</label>
             <input  className="form-control" id="exampleFormControlInput1" placeholder="" value={title} onChange={e => setTitle(e.target.value)}/>
+            {error && title ==="" && showError()}
           </div>
           <div className="mb-3">
             <label  className="form-label">Facilitator</label>
             <input className="form-control" id="exampleFormControlInput1"  value={facilitator} onChange={e => setFacilitator(e.target.value)}/>
+            {error && facilitator ==="" && showError()}
           </div>
           <div className="mb-3">
             <label  className="form-label">Description</label>
             <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+            {error && description ==="" && showError()}
           </div>
           <div>
             {
@@ -155,30 +152,33 @@ const AddAgenda = () => {
                 <div className="mb-3" key={i}>
                   <label >Agenda Items</label>
                   <input className="form-control" id="exampleFormControlInput1" value={item.item || ""} onChange={e => handleChange(i, e)}/>
-                  
+                  {error && item?.item ==="" && showError()}
               </div>
 
               ))
               
             }
-            <button onClick={(e) => addFormFields(e)}>Add items</button>
+            <button className='add-item' onClick={(e) => addFormFields(e)}>Add items</button>
           </div>
           
           <div className="mb-3">
             <label className="form-label">Date</label>
             <input className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={date} onChange={e => setDate(e.target.value)}/>
+            {error && date ==="" && showError()}
           </div>
           <div className="mb-3">
             <label className="form-label">Time</label>
             <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={time} onChange={e => setTime(e.target.value)}/>
+            {error && time ==="" && showError()}
           </div>
-          <button className='d-flex justify-content-center' type='submit' onClick={handleUpdate}>
+          <button className='d-flex justify-content-center button' type='submit' onClick={handleUpdate}>
             Submit
           </button>
           </form>
         </div>
           ):
-        (<div className='row w-500'>
+
+        (<div className='row w-500 bg-green p-2'>
           <form>
 
           <div className="mb-3">
@@ -208,7 +208,7 @@ const AddAgenda = () => {
               ))
               
             }
-            <button onClick={(e) => addFormFields(e)}>Add items</button>
+            <button className='add-item' onClick={(e) => addFormFields(e)}>Add items</button>
           </div>
           
           <div className="mb-3">
@@ -221,7 +221,7 @@ const AddAgenda = () => {
             <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value={time} onChange={e => setTime(e.target.value)}/>
             {error && time ==="" && showError()}
           </div>
-          <button className='d-flex justify-content-center' type='submit' onClick={handleSubmit}>
+          <button className='d-flex justify-content-center button' type='submit' onClick={handleSubmit}>
             Submit
           </button>
           </form>

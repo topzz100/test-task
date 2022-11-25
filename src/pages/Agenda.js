@@ -58,23 +58,23 @@ const Agenda = () => {
   return (
     <div>
         <Navbar/>
-        <div className='px-5 mt-3'>
-            <div class="card">
-                <div class="card-body d-flex justify-content-between">
+        <div className='px-5 mt-3 d-flex justify-content-center'>
+            <div class="card" style={{"width": "600px"}}>
+                <div class="card-body d-flex justify-content-between bg-green">
                     <div>
 
-                        <div>
-                            <span>Title: </span><span>{agenda.title}</span>
+                        <div className='h3'>
+                            <span >Title: </span><span>{agenda.title}</span>
                         </div>
-                        <div>
+                        <div className='h4'>
                             <span>Facilitator: </span><span>{agenda.facilitator}</span>
                         </div>
-                        <div>
+                        <div className='h5'>
                             <span>Purpose: </span><span>{agenda.description}</span>
                         </div>
                         <div>
-                            <span>Items: </span>
-                            <div className='px-2'>
+                            <span className='h5'>Items: </span>
+                            <div className='px-2 h6'>
                                 {
                                     agenda.items?.map((a, i) => (
                                         <p key={i}>{a?.item}</p>
@@ -82,29 +82,26 @@ const Agenda = () => {
                                 }
                             </div>
                         </div>
-                        <div>
+                        <div className='h6'>
                             <span>Date: </span><span>{agenda.date}</span>
                         </div>
-                        <div>
+                        <div className='h6'>
                             <span>Time: </span><span>{agenda.time}</span>
                         </div>
-                        <div><span>Status:</span>
+                        <div ><span classsName='h6'>Status:</span> &nbsp;
                             <span>
                                 <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value={agenda.status}  checked={agenda.status}
                                 onClick={()=>{
                                     // setStatus(!status)
                                     handleUpdate()
                                  }} />
-                                {/* <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" onClick={(e) => console.log(e)} ></input> */}
+                                
                             </span>
-                            {/* <div class="form-check form-switch">
-  <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" onClick={(e) => console.log(e)}  />
-  <label className="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-</div> */}
+                           
                         </div>
                     </div>
                     <div className='d-flex'>
-                        <div onClick={handleDelete}>
+                        <div onClick={handleDelete} style={{"color" : "red"}}>
                             <Delete/>
                         </div>
                         <Link to={`/update/${agenda.id}`}>

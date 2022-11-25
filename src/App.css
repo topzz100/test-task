@@ -9,5 +9,22 @@
   justify-content: center; */
   width: fit-content;
   padding: 5px 10px;
-  background-color: grey;
+  background-color: lightskyblue;
+}
+.bg-green{
+  background-color: rgb(162, 232, 162);
+}
+.fw-700{
+  font-weight: 700;
+}
+.button{
+  /* border: none; */
+  border: 1px solid black ;
+  padding: 5px 5px;
+  background-color: rgb(243, 116, 70) !important;
+}
+.add-item{
+  background-color: lightgrey;
+  border: 1px solid black;
+  padding: 3px;
 }

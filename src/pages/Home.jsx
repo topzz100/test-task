@@ -21,15 +21,15 @@ const Home = () => {
             <span>Add agenda</span>
         </div>
       </Link>
-      <div className="row">
+      <div className="row p-5">
         {
           agendas.map((a, i) => (
-            <div class="col-3 m-2" key={i}>
+            <div class="col-4 mb-1" key={i}>
               <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">{a.title}</h5>
+                <div class="card-body bg-green">
+                  <h5 class="card-title text-center">{a.title}</h5>
                   <p class="card-text">{a?.description?.substring(0,20)}...</p>
-                  <p><span>Status:</span><span>{a.status? 'Done': 'Not Done'}</span></p>
+                  <p><span className='fw-700'>Status:</span><span>{a.status? 'Done': 'Not Done'}</span></p>
                   <Link to={`/${a.id}`}>
                     <h6 className='d-flex justify-content-between'><span>See more</span> <ChevronRight /></h6>
                   </Link>
